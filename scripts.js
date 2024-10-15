@@ -126,12 +126,40 @@ console.assert(consonants('abc') === 2, 'consonants: abc inniheldur 2 samhljóð
 // Leiðbeint ferli
 
 function start() {
-  const profStrengur = 'Þetta er próf';
+  alert('Velkomin/n í þennan leik!\nSláðu inn streng(orð / setningu) til að fá skemmtilegar staðreyndir!');
+  const input = prompt('Sláðu inn streng:');
 
-  console.log('Lengsta orð:', longest(profStrengur));
-  console.log('Stysta orð:', shortest(profStrengur));
-  console.log('Snúa við:', reverse(profStrengur));
-  console.log('Er palindrome:', palindrome(profStrengur));
-  console.log('Sérhljóðar:', vowels(profStrengur));
-  console.log('Samhljóðar:', consonants(profStrengur));
+  if (input === null || input.trim() === '') return;
+
+  const longestWord = longest(input);
+  const shortestWord = shortest(input);
+  const reversed = reverse(input);
+  const vowelCount = vowels(input);
+  const consonantCount = consonants(input);
+  const isPalindrome = palindrome(input);
+
+  console.log('Niðurstöður:', {
+    input,
+    longestWord,
+    shortestWord,
+    reversed,
+    vowelCount,
+    consonantCount,
+    isPalindrome
+  });
+
+  alert(
+    `Niðurstöður fyrir strenginn "${input}":
+    Lengsta orð: ${longestWord}
+    Stysta orð: ${shortestWord}
+    Öfugur strengur: ${reversed}
+    Fjöldi sérhljóða: ${vowelCount}
+    Fjöldi samhljóða: ${consonantCount}
+    Er palindrome: ${isPalindrome ? 'Já' : 'Nei'}`
+  );
+
+  if (confirm('Gera aftur?')) {
+    start();
+  }
 }
+start();
