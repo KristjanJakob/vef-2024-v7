@@ -50,55 +50,92 @@ function split(str, separator = ' ') {
 // Grunnföll sem skilgreina á
 
 function longest(str) {
-  const split = str.split(' ');
-  let lengstaOrd = '';
-  for (const ord of split) {
-    if (ord.length > lengstaOrd.length) {
-      lengstaOrd = ord;
+  if (typeof str !== 'string') {
+    return null;
+  }
+  
+  if (str.trim() === '') {
+    return '';
+  }
+  
+  const words = str.split(' ');
+  let longestWord = words[0];
+  
+  for (const word of words) {
+    if (word.length > longestWord.length) {
+      longestWord = word;
     }
   }
-  return lengstaOrd;
+  
+  return longestWord;
 }
+
 console.assert(longest('þetta er próf') === 'þetta', 'longest: should return "þetta"');
+console.assert(longest('abc def ghi') === 'abc', 'longest: should return "abc"');
+console.assert(longest('halló heimur!') === 'heimur!', 'longest: should return "heimur!"');
+console.assert(longest('') === '', 'longest: should return an empty string');
+console.assert(longest(42) === null, 'longest: should return null for non-string input');
+
 
 function shortest(str) {
-  const split = str.split(' ');
-  let styrstaOrd = split[0]; // Initialize with the first word
-  for (const ord of split) {
-    if (ord.length < styrstaOrd.length) {
-      styrstaOrd = ord;
+  if (typeof str !== 'string') {
+    return null;
+  }
+  if (str.trim() === '') {
+    return '';
+  }
+  
+  const words = str.split(' ');
+  let shortestWord = words[0];
+  
+  for (const word of words) {
+    if (word.length < shortestWord.length) {
+      shortestWord = word;
     }
   }
-  return styrstaOrd;
+  
+  return shortestWord;
 }
-
 console.assert(shortest('þetta er próf') === 'er', 'shortest: should return "er"');
+console.assert(shortest('abc def ghi') === 'abc', 'shortest: should return "abc"');
+console.assert(shortest('halló! heimur.') === 'halló!', 'shortest: should return "halló!"');
+console.assert(shortest('') === '', 'shortest: should return an empty string');
+console.assert(shortest(42) === null, 'shortest: should return null for non-string input');
+
 
 
 function reverse(str) {
-  if (isString(str)) {
-    const split = str.split('');
-    const reversed = split.reverse();
-  
-    return reversed.join('');
+  if (!isString(str)) {
+    return null;
   }
-  return null;
+  if (str === '') {
+    return '';
+  }
+
+  return str.split('').reverse().join('');
 }
 console.assert(reverse('halló') === 'óllah', 'reverse: sný við einföldum string');
+console.assert(reverse('') === '', 'reverse: should return empty string for empty input');
+console.assert(reverse(false) === null, 'reverse: should return null for non-string input');
 
-console.assert(reverse(false) === null, 'reverse: ef ekki strengur, skila null');
 
 function palindrome(str) {
   if (!isString(str)) {
     return false;
   }
+  if (str === '') {
+    return false;
+  }
 
-  const hreinnStrengur = str.toLowerCase().replace(/[\s.,!?]/g, ''); // Remove spaces and punctuation, lowercase
-  return hreinnStrengur === reverse(hreinnStrengur);
+  const loweredStr = str.toLowerCase();
+
+  return loweredStr === reverse(loweredStr);
 }
-
 console.assert(palindrome('abba') === true, 'palindrome: "abba" er palindrome');
 console.assert(palindrome('abc') === false, 'palindrome: "abc" er ekki palindrome');
+console.assert(palindrome('A man, a plan, a canal, Panama') === false, 'palindrome: Should return false because spaces/punctuation are not removed');
+console.assert(palindrome('') === false, 'palindrome: Tómur strengur er ekki samhverfur');
+
 
 function vowels(str) {
   if (!isString(str)) {
